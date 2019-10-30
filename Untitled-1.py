@@ -34,24 +34,17 @@ import re
 
 ### challenge 6
 import os
-import zipfile
 
 url = 'http://pythonchallenge.com/pc/def/channel.html'
 
 text = requests.get(url).content
 print(text)
-f = zipfile.ZipFile('/Users/kmcginley/Downloads/channel.zip')
 
 newfile = '90052'
-comment = []
 for filename in os.listdir('/Users/kmcginley/Downloads/channel'):
-    contents = f.read(newfile+'.txt').decode('utf-8')
-    comment.append(f.getinfo(newfile+'.txt').comment.decode('utf-8'))
-    print(comment)
-    print(contents)
-    print(newfile)
-    if "Next nothing is " in contents:
-        newfile = ''.join(re.findall('Next nothing is ([0-9]+)', contents))
-    else:
+    with open(('/Users/kmcginley/Downloads/channel/{}.txt').format(newfile), 'r') as myfile:
+        contents = myfile.read()
         print(contents)
-print(''.join(comment))
+        print(newfile)
+        if "Next nothing is " in contents:
+            print(''.join(re.findall('Next nothing is ([0-9]+)', contents)))
